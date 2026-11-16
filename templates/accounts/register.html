@@ -1,0 +1,26 @@
+{% extends 'accounts/_auth_layout.html' %}
+{% block title %}Register{% endblock %}
+{% block auth_form %}
+<h1 class="auth-title">Get your free RiderGuard account now</h1>
+<p class="auth-sub">Let's get you set up so you can start logging trips and protecting your earnings.</p>
+
+{% include 'accounts/_messages.html' %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% for error in form.non_field_errors %}<div class="alert alert-error">{{ error }}</div>{% endfor %}
+  <div class="grid-2">
+    {% include 'accounts/_field.html' with field=form.first_name %}
+    {% include 'accounts/_field.html' with field=form.last_name %}
+    {% include 'accounts/_field.html' with field=form.username %}
+    {% include 'accounts/_field.html' with field=form.email %}
+    {% include 'accounts/_field.html' with field=form.contact_number %}
+  </div>
+  {% include 'accounts/_field.html' with field=form.platforms %}
+  <div class="grid-2">
+    {% include 'accounts/_field.html' with field=form.password1 %}
+    {% include 'accounts/_field.html' with field=form.password2 %}
+  </div>
+  <button type="submit" class="btn">Create Account</button>
+</form>
+<p class="auth-switch">Already have an account? <a href="{% url 'accounts:login' %}">Log in.</a></p>
+{% endblock %}

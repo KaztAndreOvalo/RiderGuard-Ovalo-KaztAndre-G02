@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Know your fare. Keep your proof.</h1>
+  <p>RiderGuard is an independent companion for Filipino ride-hailing and delivery riders. Log trips, check fares against
+    published commission rates, and keep a timestamped evidence vault for disputes.</p>
+  <div class="hero-actions">
+    <a class="btn" href="{% url 'accounts:register' %}">Create a rider account</a>
+    <a class="btn btn-ghost" href="{% url 'accounts:login' %}">Log in</a>
+  </div>
+</section>
+{% endblock %}

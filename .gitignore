@@ -1,0 +1,19 @@
+# Secrets
+.env
+
+# Virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Uploaded media (profile photos)
+media/
+
+# Local DB / misc
+*.sqlite3
+staticfiles/
+.vscode/
+.DS_Store

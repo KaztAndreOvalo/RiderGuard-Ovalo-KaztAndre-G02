@@ -1,0 +1,17 @@
+{% extends 'accounts/_auth_layout.html' %}
+{% block title %}Log in{% endblock %}
+{% block auth_form %}
+<h1 class="auth-title">Welcome back, rider</h1>
+<p class="auth-sub">Log in to see your trips, fare checks and dispute files.</p>
+
+{% include 'accounts/_messages.html' %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% for error in form.non_field_errors %}<div class="alert alert-error">{{ error }}</div>{% endfor %}
+  {% include 'accounts/_field.html' with field=form.username %}
+  {% include 'accounts/_field.html' with field=form.password %}
+  <input type="hidden" name="next" value="{{ next }}">
+  <button type="submit" class="btn">Log In</button>
+</form>
+<p class="auth-switch">Don't have an account? <a href="{% url 'accounts:register' %}">Register.</a></p>
+{% endblock %}

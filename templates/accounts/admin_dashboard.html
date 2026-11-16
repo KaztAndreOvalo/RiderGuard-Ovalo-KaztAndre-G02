@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <span class="badge badge-admin">Admin</span>
+    <h1>Admin Dashboard</h1>
+    <p class="muted">Manage riders, reference rates and community reports.</p>
+  </div>
+  <a class="btn" href="{% url 'admin:accounts_user_changelist' %}">Manage users</a>
+</div>
+
+<section class="stats">
+  <div class="stat"><span class="stat-label">Registered riders</span><span class="stat-value">{{ total_riders }}</span></div>
+  <div class="stat"><span class="stat-label">Active riders</span><span class="stat-value">{{ active_riders }}</span></div>
+  <div class="stat"><span class="stat-label">Admins</span><span class="stat-value">{{ total_admins }}</span></div>
+</section>
+
+<h2>Admin tools</h2>
+<section class="tiles">
+  <a class="tile" href="{% url 'admin:accounts_user_changelist' %}"><h3>User Management</h3><p>View, activate or deactivate accounts.</p></a>
+  <div class="tile tile-soon"><h3>Commission Rate Table</h3><p>Maintain the Fare Checker reference rates.</p><span class="pill">Sprint 4</span></div>
+  <div class="tile tile-soon"><h3>Report Moderation</h3><p>Filter spam and abuse in Community Reports.</p><span class="pill">Sprint 6</span></div>
+</section>
+
+<h2>Newest riders</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Username</th><th>Name</th><th>Email</th><th>Platforms</th><th>Joined</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for r in recent_riders %}
+        <tr>
+          <td>{{ r.username }}</td>
+          <td>{{ r.get_full_name }}</td>
+          <td>{{ r.email }}</td>
+          <td>{{ r.platform_labels|join:", " }}</td>
+          <td>{{ r.date_joined|date:"M j, Y" }}</td>
+          <td>{% if r.is_active %}<span class="chip chip-ok">Active</span>{% else %}<span class="chip chip-off">Inactive</span>{% endif %}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6" class="muted center">No riders yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

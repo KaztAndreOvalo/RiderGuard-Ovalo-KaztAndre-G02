@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="profile-head">
+    {% if profile_user.profile_photo %}
+      <img class="avatar" src="{{ profile_user.profile_photo.url }}" alt="Profile photo">
+    {% else %}
+      <div class="avatar avatar-empty">{{ profile_user.first_name|first|default:profile_user.username|first|upper }}</div>
+    {% endif %}
+    <div>
+      <h1>{{ profile_user.get_full_name|default:profile_user.username }}</h1>
+      <span class="badge {% if profile_user.is_admin_role %}badge-admin{% else %}badge-rider{% endif %}">{{ profile_user.get_role_display }}</span>
+    </div>
+    <a class="btn push-right" href="{% url 'accounts:profile_edit' %}">Edit profile</a>
+  </div>
+
+  <dl class="details">
+    <dt>Username</dt><dd>{{ profile_user.username }}</dd>
+    <dt>Email</dt><dd>{{ profile_user.email }}</dd>
+    <dt>Contact number</dt><dd>{{ profile_user.contact_number|default:"—" }}</dd>
+    {% if profile_user.is_rider %}
+      <dt>Platforms</dt><dd>{% for label in profile_user.platform_labels %}<span class="chip">{{ label }}</span>{% empty %}—{% endfor %}</dd>
+      <dt>Vehicle type</dt><dd>{{ profile_user.vehicle_type|default:"—" }}</dd>
+      <dt>Plate number</dt><dd>{{ profile_user.plate_number|default:"—" }}</dd>
+    {% endif %}
+    <dt>Member since</dt><dd>{{ profile_user.date_joined|date:"F j, Y" }}</dd>
+  </dl>
+</div>
+{% endblock %}

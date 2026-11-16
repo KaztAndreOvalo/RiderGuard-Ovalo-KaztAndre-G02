@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Rider Dashboard{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <span class="badge badge-rider">Rider</span>
+    <h1>Hi, {{ user.first_name|default:user.username }}</h1>
+    <p class="muted">Here's your summary for today.</p>
+  </div>
+</div>
+
+<section class="stats">
+  <div class="stat"><span class="stat-label">Earnings today</span><span class="stat-value">₱{{ earnings_today|floatformat:2 }}</span></div>
+  <div class="stat"><span class="stat-label">Earnings this week</span><span class="stat-value">₱{{ earnings_week|floatformat:2 }}</span></div>
+  <div class="stat"><span class="stat-label">Flagged fares</span><span class="stat-value">{{ flagged_fares }}</span></div>
+  <div class="stat"><span class="stat-label">Pending disputes</span><span class="stat-value">{{ pending_disputes }}</span></div>
+</section>
+
+<h2>Your tools</h2>
+<section class="tiles">
+  <div class="tile tile-soon"><h3>Trip Logger</h3><p>Log fares and receipts after each ride.</p><span class="pill">Sprint 3</span></div>
+  <div class="tile tile-soon"><h3>Fare Checker</h3><p>Compare fares against published commission rates.</p><span class="pill">Sprint 4</span></div>
+  <div class="tile tile-soon"><h3>Dispute Vault</h3><p>Timestamped evidence, exportable as PDF.</p><span class="pill">Sprint 5</span></div>
+  <div class="tile tile-soon"><h3>Rights &amp; Resources</h3><p>LTFRB / DOLE guidelines and complaint steps.</p><span class="pill">Sprint 5</span></div>
+  <div class="tile tile-soon"><h3>Community Reports</h3><p>Anonymized trends across platforms.</p><span class="pill">Sprint 6</span></div>
+  <a class="tile" href="{% url 'accounts:profile' %}"><h3>My Profile</h3><p>Personal info, vehicle and platforms.</p></a>
+</section>
+
+<h2>Platforms you ride for</h2>
+<p>
+  {% for label in user.platform_labels %}<span class="chip">{{ label }}</span>{% empty %}
+  <span class="muted">None yet — <a href="{% url 'accounts:profile_edit' %}">add them in your profile</a>.</span>{% endfor %}
+</p>
+{% endblock %}

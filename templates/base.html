@@ -1,0 +1,49 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}RiderGuard{% endblock %} · RiderGuard</title>
+  <link rel="icon" href="{% static 'img/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  {% block topbar %}
+  <header class="topbar">
+    <a class="brand" href="{% url 'accounts:home' %}">
+      <span class="brand-mark"><img src="{% static 'img/logo.svg' %}" alt=""></span> RIDERGUARD
+    </a>
+    <nav class="nav">
+      {% if user.is_authenticated %}
+        {% if user.is_admin_role %}
+          <a href="{% url 'accounts:admin_dashboard' %}">Admin Dashboard</a>
+          <a href="{% url 'admin:index' %}">Manage Users</a>
+        {% else %}
+          <a href="{% url 'accounts:rider_dashboard' %}">Dashboard</a>
+          <span class="nav-soon" title="Coming in Sprint 3">Trip Logger</span>
+          <span class="nav-soon" title="Coming in Sprint 4">Fare Checker</span>
+          <span class="nav-soon" title="Coming in Sprint 5">Dispute Vault</span>
+        {% endif %}
+        <a href="{% url 'accounts:profile' %}">Profile</a>
+        <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="link-btn">Log out</button>
+        </form>
+      {% else %}
+        <a href="{% url 'accounts:login' %}">Log in</a>
+        <a class="btn btn-small" href="{% url 'accounts:register' %}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+  {% endblock %}
+
+  <main class="{% block main_class %}container{% endblock %}">
+    {% block messages %}
+    {% include 'accounts/_messages.html' %}
+    {% endblock %}
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block footer %}<footer class="footer">RiderGuard · IT317 G7 · Kazt Andre S. Ovalo</footer>{% endblock %}
+</body>
+</html>

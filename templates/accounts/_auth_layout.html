@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% comment %}Shared split-card layout for the login and register pages.{% endcomment %}
+{% block body_class %}auth-page{% endblock %}
+{% block topbar %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block main_class %}auth-wrap{% endblock %}
+{% block messages %}{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+  <aside class="auth-brand">
+    <div class="auth-brand-inner">
+      <img class="auth-logo" src="{% static 'img/logo.svg' %}" alt="RiderGuard logo">
+      <div class="auth-wordmark">RIDERGUARD</div>
+      <p class="auth-tagline">KNOW YOUR FARE. KEEP YOUR PROOF.</p>
+      <p class="auth-blurb">An independent companion for Filipino ride-hailing and delivery riders. Log trips, check fares
+        against published commission rates, and keep a timestamped evidence vault for disputes.</p>
+    </div>
+    <div class="auth-credit">IT317 · G7 · <strong>Kazt Andre S. Ovalo</strong></div>
+  </aside>
+
+  <section class="auth-form">
+    <a class="auth-close" href="{% url 'accounts:home' %}" aria-label="Close">&times;</a>
+    {% block auth_form %}{% endblock %}
+  </section>
+</div>
+{% endblock %}
